@@ -3,6 +3,9 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0d0d0d">
+<style>:root { color-scheme: dark; }</style>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Rentabilité Immobilière</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
@@ -22,15 +25,22 @@
 
 - { box-sizing: border-box; margin: 0; padding: 0; }
 
+html {
+background-color: #0d0d0d !important;
+}
+
 body {
-background: var(–bg);
-color: var(–text);
+background: #0d0d0d !important;
+background-color: #0d0d0d !important;
+color: #e8e0d4 !important;
 font-family: ‘DM Mono’, monospace;
 min-height: 100vh;
 padding: 40px 20px 80px;
 background-image:
 radial-gradient(ellipse at 20% 50%, rgba(201,168,76,0.04) 0%, transparent 60%),
 radial-gradient(ellipse at 80% 20%, rgba(201,168,76,0.03) 0%, transparent 50%);
+-webkit-text-size-adjust: 100%;
+color-scheme: dark;
 }
 
 header {
@@ -76,8 +86,9 @@ gap: 24px;
 }
 
 .card {
-background: var(–surface);
-border: 1px solid var(–border);
+background: #161616 !important;
+background-color: #161616 !important;
+border: 1px solid #2a2a2a;
 border-radius: 2px;
 padding: 28px;
 }
@@ -120,15 +131,18 @@ align-items: center;
 
 .field input {
 width: 100%;
-background: var(–surface2);
-border: 1px solid var(–border);
-color: var(–text);
+background: #1e1e1e !important;
+background-color: #1e1e1e !important;
+border: 1px solid #2a2a2a;
+color: #e8e0d4 !important;
 font-family: ‘DM Mono’, monospace;
 font-size: 0.9rem;
 padding: 10px 14px;
 border-radius: 2px;
 transition: border-color 0.2s;
 outline: none;
+-webkit-appearance: none;
+appearance: none;
 }
 
 .field input:focus {
