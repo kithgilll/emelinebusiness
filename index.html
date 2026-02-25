@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
@@ -19,287 +20,288 @@
     --muted: #7a7060;
   }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+- { box-sizing: border-box; margin: 0; padding: 0; }
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'DM Mono', monospace;
-    min-height: 100vh;
-    padding: 40px 20px 80px;
-    background-image: 
-      radial-gradient(ellipse at 20% 50%, rgba(201,168,76,0.04) 0%, transparent 60%),
-      radial-gradient(ellipse at 80% 20%, rgba(201,168,76,0.03) 0%, transparent 50%);
-  }
+body {
+background: var(–bg);
+color: var(–text);
+font-family: ‘DM Mono’, monospace;
+min-height: 100vh;
+padding: 40px 20px 80px;
+background-image:
+radial-gradient(ellipse at 20% 50%, rgba(201,168,76,0.04) 0%, transparent 60%),
+radial-gradient(ellipse at 80% 20%, rgba(201,168,76,0.03) 0%, transparent 50%);
+}
 
-  header {
-    text-align: center;
-    margin-bottom: 50px;
-  }
+header {
+text-align: center;
+margin-bottom: 50px;
+}
 
-  header h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2rem, 5vw, 3.5rem);
-    font-weight: 900;
-    color: var(--gold);
-    letter-spacing: -1px;
-    line-height: 1;
-  }
+header h1 {
+font-family: ‘Playfair Display’, serif;
+font-size: clamp(2rem, 5vw, 3.5rem);
+font-weight: 900;
+color: var(–gold);
+letter-spacing: -1px;
+line-height: 1;
+}
 
-  header p {
-    color: var(--muted);
-    font-size: 0.75rem;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    margin-top: 8px;
-  }
+header p {
+color: var(–muted);
+font-size: 0.75rem;
+letter-spacing: 3px;
+text-transform: uppercase;
+margin-top: 8px;
+}
 
-  .divider {
-    width: 60px;
-    height: 1px;
-    background: var(--gold);
-    margin: 16px auto 0;
-    opacity: 0.5;
-  }
+.divider {
+width: 60px;
+height: 1px;
+background: var(–gold);
+margin: 16px auto 0;
+opacity: 0.5;
+}
 
-  .layout {
-    max-width: 1300px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-  }
+.layout {
+max-width: 1300px;
+margin: 0 auto;
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 24px;
+}
 
-  @media (max-width: 900px) {
-    .layout { grid-template-columns: 1fr; }
-  }
+@media (max-width: 900px) {
+.layout { grid-template-columns: 1fr; }
+}
 
-  .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 2px;
-    padding: 28px;
-  }
+.card {
+background: var(–surface);
+border: 1px solid var(–border);
+border-radius: 2px;
+padding: 28px;
+}
 
-  .card-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 1rem;
-    color: var(--gold);
-    letter-spacing: 1px;
-    margin-bottom: 24px;
-    padding-bottom: 14px;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
+.card-title {
+font-family: ‘Playfair Display’, serif;
+font-size: 1rem;
+color: var(–gold);
+letter-spacing: 1px;
+margin-bottom: 24px;
+padding-bottom: 14px;
+border-bottom: 1px solid var(–border);
+display: flex;
+align-items: center;
+gap: 10px;
+}
 
-  .card-title span.icon {
-    font-size: 1.1rem;
-  }
+.card-title span.icon {
+font-size: 1.1rem;
+}
 
-  .field {
-    margin-bottom: 16px;
-  }
+.field {
+margin-bottom: 16px;
+}
 
-  .field label {
-    display: block;
-    font-size: 0.65rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 6px;
-  }
+.field label {
+display: block;
+font-size: 0.65rem;
+letter-spacing: 2px;
+text-transform: uppercase;
+color: var(–muted);
+margin-bottom: 6px;
+}
 
-  .field-row {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-  }
+.field-row {
+display: flex;
+gap: 8px;
+align-items: center;
+}
 
-  .field input {
-    width: 100%;
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    color: var(--text);
-    font-family: 'DM Mono', monospace;
-    font-size: 0.9rem;
-    padding: 10px 14px;
-    border-radius: 2px;
-    transition: border-color 0.2s;
-    outline: none;
-  }
+.field input {
+width: 100%;
+background: var(–surface2);
+border: 1px solid var(–border);
+color: var(–text);
+font-family: ‘DM Mono’, monospace;
+font-size: 0.9rem;
+padding: 10px 14px;
+border-radius: 2px;
+transition: border-color 0.2s;
+outline: none;
+}
 
-  .field input:focus {
-    border-color: var(--gold);
-  }
+.field input:focus {
+border-color: var(–gold);
+}
 
-  .unit {
-    font-size: 0.75rem;
-    color: var(--muted);
-    white-space: nowrap;
-    min-width: 32px;
-  }
+.unit {
+font-size: 0.75rem;
+color: var(–muted);
+white-space: nowrap;
+min-width: 32px;
+}
 
-  .badge {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    padding: 10px 14px;
-    font-size: 0.85rem;
-    color: var(--gold-light);
-    min-width: 110px;
-    text-align: right;
-    white-space: nowrap;
-    border-radius: 2px;
-  }
+.badge {
+background: var(–surface2);
+border: 1px solid var(–border);
+padding: 10px 14px;
+font-size: 0.85rem;
+color: var(–gold-light);
+min-width: 110px;
+text-align: right;
+white-space: nowrap;
+border-radius: 2px;
+}
 
-  /* Results */
-  .results-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-bottom: 16px;
-  }
+/* Results */
+.results-grid {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 12px;
+margin-bottom: 16px;
+}
 
-  .result-box {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    padding: 16px;
-    border-radius: 2px;
-    text-align: center;
-  }
+.result-box {
+background: var(–surface2);
+border: 1px solid var(–border);
+padding: 16px;
+border-radius: 2px;
+text-align: center;
+}
 
-  .result-box .label {
-    font-size: 0.6rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 8px;
-  }
+.result-box .label {
+font-size: 0.6rem;
+letter-spacing: 2px;
+text-transform: uppercase;
+color: var(–muted);
+margin-bottom: 8px;
+}
 
-  .result-box .value {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--text);
-  }
+.result-box .value {
+font-family: ‘Playfair Display’, serif;
+font-size: 1.5rem;
+font-weight: 700;
+color: var(–text);
+}
 
-  .result-box .value.positive { color: var(--green); }
-  .result-box .value.negative { color: var(--red); }
-  .result-box .value.gold { color: var(--gold-light); }
+.result-box .value.positive { color: var(–green); }
+.result-box .value.negative { color: var(–red); }
+.result-box .value.gold { color: var(–gold-light); }
 
-  .result-box .sub {
-    font-size: 0.65rem;
-    color: var(--muted);
-    margin-top: 4px;
-  }
+.result-box .sub {
+font-size: 0.65rem;
+color: var(–muted);
+margin-top: 4px;
+}
 
-  /* Cash-flow bar */
-  .cashflow-section {
-    margin-top: 8px;
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    padding: 18px;
-    border-radius: 2px;
-  }
+/* Cash-flow bar */
+.cashflow-section {
+margin-top: 8px;
+background: var(–surface2);
+border: 1px solid var(–border);
+padding: 18px;
+border-radius: 2px;
+}
 
-  .cashflow-label {
-    font-size: 0.6rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 12px;
-  }
+.cashflow-label {
+font-size: 0.6rem;
+letter-spacing: 2px;
+text-transform: uppercase;
+color: var(–muted);
+margin-bottom: 12px;
+}
 
-  .cashflow-bar-wrap {
-    background: #111;
-    border-radius: 2px;
-    height: 8px;
-    overflow: hidden;
-    margin-bottom: 8px;
-  }
+.cashflow-bar-wrap {
+background: #111;
+border-radius: 2px;
+height: 8px;
+overflow: hidden;
+margin-bottom: 8px;
+}
 
-  .cashflow-bar {
-    height: 100%;
-    border-radius: 2px;
-    transition: width 0.5s ease, background 0.3s;
-  }
+.cashflow-bar {
+height: 100%;
+border-radius: 2px;
+transition: width 0.5s ease, background 0.3s;
+}
 
-  .cashflow-numbers {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.72rem;
-  }
+.cashflow-numbers {
+display: flex;
+justify-content: space-between;
+font-size: 0.72rem;
+}
 
-  /* Autofinancement */
-  .autofinancement {
-    grid-column: 1 / -1;
-    background: var(--surface);
-    border: 1px solid var(--gold);
-    border-radius: 2px;
-    padding: 24px 28px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
-    flex-wrap: wrap;
-  }
+/* Autofinancement */
+.autofinancement {
+grid-column: 1 / -1;
+background: var(–surface);
+border: 1px solid var(–gold);
+border-radius: 2px;
+padding: 24px 28px;
+display: flex;
+align-items: center;
+justify-content: space-between;
+gap: 20px;
+flex-wrap: wrap;
+}
 
-  .autofinancement .label {
-    font-size: 0.65rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 6px;
-  }
+.autofinancement .label {
+font-size: 0.65rem;
+letter-spacing: 2px;
+text-transform: uppercase;
+color: var(–muted);
+margin-bottom: 6px;
+}
 
-  .autofinancement .main {
-    font-family: 'Playfair Display', serif;
-    font-size: 2rem;
-    font-weight: 900;
-    color: var(--gold-light);
-  }
+.autofinancement .main {
+font-family: ‘Playfair Display’, serif;
+font-size: 2rem;
+font-weight: 900;
+color: var(–gold-light);
+}
 
-  .autofinancement .desc {
-    font-size: 0.72rem;
-    color: var(--muted);
-    margin-top: 4px;
-    max-width: 400px;
-    line-height: 1.6;
-  }
+.autofinancement .desc {
+font-size: 0.72rem;
+color: var(–muted);
+margin-top: 4px;
+max-width: 400px;
+line-height: 1.6;
+}
 
-  .status-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 18px;
-    border-radius: 2px;
-    font-size: 0.75rem;
-    letter-spacing: 1px;
-    font-weight: 500;
-  }
+.status-pill {
+display: inline-flex;
+align-items: center;
+gap: 8px;
+padding: 8px 18px;
+border-radius: 2px;
+font-size: 0.75rem;
+letter-spacing: 1px;
+font-weight: 500;
+}
 
-  .status-pill.green { background: rgba(76,175,80,0.12); border: 1px solid var(--green); color: var(--green); }
-  .status-pill.red { background: rgba(239,83,80,0.12); border: 1px solid var(--red); color: var(--red); }
-  .status-pill.yellow { background: rgba(201,168,76,0.12); border: 1px solid var(--gold); color: var(--gold-light); }
+.status-pill.green { background: rgba(76,175,80,0.12); border: 1px solid var(–green); color: var(–green); }
+.status-pill.red { background: rgba(239,83,80,0.12); border: 1px solid var(–red); color: var(–red); }
+.status-pill.yellow { background: rgba(201,168,76,0.12); border: 1px solid var(–gold); color: var(–gold-light); }
 
-  .dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
+.dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
 
-  /* Taux endettement */
-  .taux-bar-wrap {
-    background: #111;
-    border-radius: 2px;
-    height: 6px;
-    margin: 8px 0 4px;
-    overflow: hidden;
-  }
-  .taux-bar {
-    height: 100%;
-    border-radius: 2px;
-    background: var(--green);
-    transition: width 0.5s, background 0.3s;
-  }
+/* Taux endettement */
+.taux-bar-wrap {
+background: #111;
+border-radius: 2px;
+height: 6px;
+margin: 8px 0 4px;
+overflow: hidden;
+}
+.taux-bar {
+height: 100%;
+border-radius: 2px;
+background: var(–green);
+transition: width 0.5s, background 0.3s;
+}
 </style>
+
 </head>
 <body>
 
@@ -312,230 +314,247 @@
 <div class="layout">
 
   <!-- BIEN -->
+
   <div class="card">
     <div class="card-title"><span class="icon">🏠</span> Le Bien</div>
 
-    <div class="field">
-      <label>Prix du bien</label>
-      <div class="field-row">
-        <input type="number" id="prix" value="200000" oninput="calc()">
-        <span class="unit">€</span>
-      </div>
-    </div>
+```
+<div class="field">
+  <label>Prix du bien</label>
+  <div class="field-row">
+    <input type="number" id="prix" value="200000" oninput="calc()">
+    <span class="unit">€</span>
+  </div>
+</div>
 
-    <div class="field">
-      <label>Frais d'agence</label>
-      <div class="field-row">
-        <input type="number" id="agence" value="5000" oninput="calc()">
-        <span class="unit">€</span>
-      </div>
-    </div>
+<div class="field">
+  <label>Frais d'agence</label>
+  <div class="field-row">
+    <input type="number" id="agence" value="5000" oninput="calc()">
+    <span class="unit">€</span>
+  </div>
+</div>
 
-    <div class="field">
-      <label>Frais de notaire <span style="color:var(--gold);font-size:0.6rem;letter-spacing:1px">(calculés automatiquement à 8%)</span></label>
-      <div class="field-row">
-        <div style="width:100%;background:var(--surface2);border:1px solid var(--border);padding:10px 14px;border-radius:2px;font-size:0.9rem;color:var(--gold-light)" id="notaire_display">16 000 €</div>
-        <span class="unit">€</span>
-      </div>
-    </div>
+<div class="field">
+  <label>Frais de notaire <span style="color:var(--gold);font-size:0.6rem;letter-spacing:1px">(calculés automatiquement à 8%)</span></label>
+  <div class="field-row">
+    <div style="width:100%;background:var(--surface2);border:1px solid var(--border);padding:10px 14px;border-radius:2px;font-size:0.9rem;color:var(--gold-light)" id="notaire_display">16 000 €</div>
+    <span class="unit">€</span>
+  </div>
+</div>
 
-    <!-- COÛT TOTAL OPÉRATION -->
-    <div style="background:rgba(201,168,76,0.06);border:1px solid rgba(201,168,76,0.25);border-radius:2px;padding:14px 16px;margin-bottom:16px">
-      <div style="font-size:0.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:10px">Coût total de l'opération</div>
-      <div style="font-size:0.78rem;display:flex;flex-direction:column;gap:6px">
-        <div style="display:flex;justify-content:space-between"><span style="color:var(--muted)">Prix du bien</span><span id="recap_prix">—</span></div>
-        <div style="display:flex;justify-content:space-between"><span style="color:var(--muted)">Frais d'agence</span><span id="recap_agence">—</span></div>
-        <div style="display:flex;justify-content:space-between"><span style="color:var(--muted)">Frais de notaire (8%)</span><span id="recap_notaire">—</span></div>
-        <div style="display:flex;justify-content:space-between;border-top:1px solid rgba(201,168,76,0.2);padding-top:8px;margin-top:2px">
-          <span style="color:var(--gold-light);font-weight:500">Total acquisition</span>
-          <span style="color:var(--gold-light);font-family:'Playfair Display',serif;font-size:1rem;font-weight:700" id="recap_total">—</span>
-        </div>
-      </div>
+<!-- COÛT TOTAL OPÉRATION -->
+<div style="background:rgba(201,168,76,0.06);border:1px solid rgba(201,168,76,0.25);border-radius:2px;padding:14px 16px;margin-bottom:16px">
+  <div style="font-size:0.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:10px">Coût total de l'opération</div>
+  <div style="font-size:0.78rem;display:flex;flex-direction:column;gap:6px">
+    <div style="display:flex;justify-content:space-between"><span style="color:var(--muted)">Prix du bien</span><span id="recap_prix">—</span></div>
+    <div style="display:flex;justify-content:space-between"><span style="color:var(--muted)">Frais d'agence</span><span id="recap_agence">—</span></div>
+    <div style="display:flex;justify-content:space-between"><span style="color:var(--muted)">Frais de notaire (8%)</span><span id="recap_notaire">—</span></div>
+    <div style="display:flex;justify-content:space-between;border-top:1px solid rgba(201,168,76,0.2);padding-top:8px;margin-top:2px">
+      <span style="color:var(--gold-light);font-weight:500">Total acquisition</span>
+      <span style="color:var(--gold-light);font-family:'Playfair Display',serif;font-size:1rem;font-weight:700" id="recap_total">—</span>
     </div>
+  </div>
+</div>
 
-    <div class="field">
-      <label>Surface habitable</label>
-      <div class="field-row">
-        <input type="number" id="surface" value="50" oninput="calc()">
-        <span class="unit">m²</span>
-        <div class="badge" id="prix_m2">4 000 €/m²</div>
-      </div>
-    </div>
+<div class="field">
+  <label>Surface habitable</label>
+  <div class="field-row">
+    <input type="number" id="surface" value="50" oninput="calc()">
+    <span class="unit">m²</span>
+    <div class="badge" id="prix_m2">4 000 €/m²</div>
+  </div>
+</div>
 
-    <div class="field">
-      <label>Charges mensuelles</label>
-      <div class="field-row">
-        <input type="number" id="charges" value="100" oninput="calc()">
-        <span class="unit">€/mois</span>
-      </div>
-    </div>
+<div class="field">
+  <label>Charges mensuelles</label>
+  <div class="field-row">
+    <input type="number" id="charges" value="100" oninput="calc()">
+    <span class="unit">€/mois</span>
+  </div>
+</div>
 
-    <div class="field">
-      <label>Taxe foncière</label>
-      <div class="field-row">
-        <input type="number" id="taxe" value="1200" oninput="calc()">
-        <span class="unit">€/an</span>
-      </div>
-    </div>
+<div class="field">
+  <label>Taxe foncière</label>
+  <div class="field-row">
+    <input type="number" id="taxe" value="1200" oninput="calc()">
+    <span class="unit">€/an</span>
+  </div>
+</div>
 
-    <div class="field">
-      <label>Loyer espéré</label>
-      <div class="field-row">
-        <input type="number" id="loyer" value="900" oninput="calc()">
-        <span class="unit">€/mois</span>
-      </div>
-    </div>
+<div class="field">
+  <label>Loyer espéré</label>
+  <div class="field-row">
+    <input type="number" id="loyer" value="900" oninput="calc()">
+    <span class="unit">€/mois</span>
+  </div>
+</div>
 
-    <div class="field">
-      <label>Taux de vacance locative</label>
-      <div class="field-row">
-        <input type="number" id="vacance" value="5" min="0" max="100" oninput="calc()">
-        <span class="unit">%</span>
-      </div>
-    </div>
+<div class="field">
+  <label>Taux de vacance locative</label>
+  <div class="field-row">
+    <input type="number" id="vacance" value="5" min="0" max="100" oninput="calc()">
+    <span class="unit">%</span>
+  </div>
+</div>
+```
+
   </div>
 
   <!-- FINANCEMENT -->
+
   <div class="card">
     <div class="card-title"><span class="icon">🏦</span> Financement</div>
 
-    <div class="field">
-      <label>Apport personnel</label>
-      <div class="field-row">
-        <input type="number" id="apport" value="30000" oninput="calc()">
-        <span class="unit">€</span>
-      </div>
-    </div>
+```
+<div class="field">
+  <label>Apport personnel</label>
+  <div class="field-row">
+    <input type="number" id="apport" value="30000" oninput="calc()">
+    <span class="unit">€</span>
+  </div>
+</div>
 
-    <div class="field">
-      <label>Montant à emprunter</label>
-      <div class="field-row">
-        <input type="number" id="emprunt" value="191000" oninput="calc()">
-        <span class="unit">€</span>
-      </div>
-    </div>
+<div class="field">
+  <label>Montant à emprunter <span style="color:var(--gold);font-size:0.6rem;letter-spacing:1px">(coût total &minus; apport)</span></label>
+  <div class="field-row">
+    <div style="width:100%;background:var(--surface2);border:1px solid rgba(201,168,76,0.25);padding:10px 14px;border-radius:2px;font-size:0.9rem;color:var(--gold-light);font-family:'Playfair Display',serif;font-weight:700" id="emprunt_display">—</div>
+    <span class="unit">€</span>
+  </div>
+</div>
 
-    <div class="field">
-      <label>Taux d'intérêt annuel</label>
-      <div class="field-row">
-        <input type="number" id="taux" value="3.5" step="0.1" oninput="calc()">
-        <span class="unit">%</span>
-      </div>
-    </div>
+<div class="field">
+  <label>Taux d'intérêt annuel</label>
+  <div class="field-row">
+    <input type="number" id="taux" value="3.5" step="0.1" oninput="calc()">
+    <span class="unit">%</span>
+  </div>
+</div>
 
-    <div class="field">
-      <label>Durée du prêt</label>
-      <div class="field-row">
-        <input type="number" id="duree" value="20" oninput="calc()">
-        <span class="unit">ans</span>
-      </div>
-    </div>
+<div class="field">
+  <label>Durée du prêt</label>
+  <div class="field-row">
+    <input type="number" id="duree" value="20" oninput="calc()">
+    <span class="unit">ans</span>
+  </div>
+</div>
 
-    <div class="field">
-      <label>Salaire net d'impôt</label>
-      <div class="field-row">
-        <input type="number" id="salaire" value="2500" oninput="calc()">
-        <span class="unit">€/mois</span>
-      </div>
-    </div>
+<div class="field">
+  <label>Salaire net d'impôt</label>
+  <div class="field-row">
+    <input type="number" id="salaire" value="2500" oninput="calc()">
+    <span class="unit">€/mois</span>
+  </div>
+</div>
 
-    <!-- Taux endettement -->
-    <div style="margin-top:20px; padding-top:18px; border-top:1px solid var(--border)">
-      <div style="display:flex;justify-content:space-between;align-items:center">
-        <span style="font-size:0.62rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted)">Taux d'endettement</span>
-        <span id="taux_endettement_val" style="font-size:0.9rem;color:var(--text)">—</span>
-      </div>
-      <div class="taux-bar-wrap"><div class="taux-bar" id="taux_bar" style="width:0%"></div></div>
-      <div style="font-size:0.62rem;color:var(--muted)">Seuil recommandé : 35%</div>
-    </div>
+<!-- Taux endettement -->
+<div style="margin-top:20px; padding-top:18px; border-top:1px solid var(--border)">
+  <div style="display:flex;justify-content:space-between;align-items:center">
+    <span style="font-size:0.62rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted)">Taux d'endettement</span>
+    <span id="taux_endettement_val" style="font-size:0.9rem;color:var(--text)">—</span>
+  </div>
+  <div class="taux-bar-wrap"><div class="taux-bar" id="taux_bar" style="width:0%"></div></div>
+  <div style="font-size:0.62rem;color:var(--muted)">Seuil recommandé : 35%</div>
+</div>
 
-    <!-- Mensualité résumé -->
-    <div style="margin-top:16px; background:var(--surface2);border:1px solid var(--border);padding:16px;border-radius:2px;">
-      <div style="font-size:0.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:10px">Mensualités calculées</div>
-      <div style="display:flex;justify-content:space-between;font-size:0.82rem;margin-bottom:6px">
-        <span style="color:var(--muted)">Remboursement prêt</span>
-        <span id="mensualite_val">—</span>
-      </div>
-      <div style="display:flex;justify-content:space-between;font-size:0.82rem;margin-bottom:6px">
-        <span style="color:var(--muted)">Coût total du crédit</span>
-        <span id="cout_credit">—</span>
-      </div>
-      <div style="display:flex;justify-content:space-between;font-size:0.82rem">
-        <span style="color:var(--muted)">Investissement total</span>
-        <span id="invest_total">—</span>
-      </div>
-    </div>
+<!-- Mensualité résumé -->
+<div style="margin-top:16px; background:var(--surface2);border:1px solid var(--border);padding:16px;border-radius:2px;">
+  <div style="font-size:0.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:10px">Mensualités calculées</div>
+  <div style="display:flex;justify-content:space-between;font-size:0.82rem;margin-bottom:6px">
+    <span style="color:var(--muted)">Remboursement prêt</span>
+    <span id="mensualite_val">—</span>
+  </div>
+  <div style="display:flex;justify-content:space-between;font-size:0.82rem;margin-bottom:6px">
+    <span style="color:var(--muted)">Coût total du crédit</span>
+    <span id="cout_credit">—</span>
+  </div>
+  <div style="display:flex;justify-content:space-between;font-size:0.82rem">
+    <span style="color:var(--muted)">Investissement total</span>
+    <span id="invest_total">—</span>
+  </div>
+</div>
+```
+
   </div>
 
   <!-- RÉSULTATS -->
+
   <div class="card">
     <div class="card-title"><span class="icon">📊</span> Indicateurs de Rentabilité</div>
 
-    <div class="results-grid">
-      <div class="result-box">
-        <div class="label">Rendement brut</div>
-        <div class="value gold" id="rdt_brut">—</div>
-        <div class="sub">loyers / prix total</div>
-      </div>
-      <div class="result-box">
-        <div class="label">Rendement net</div>
-        <div class="value gold" id="rdt_net">—</div>
-        <div class="sub">après charges & taxe</div>
-      </div>
-      <div class="result-box">
-        <div class="label">Loyer effectif</div>
-        <div class="value" id="loyer_effectif">—</div>
-        <div class="sub">avec vacance locative</div>
-      </div>
-      <div class="result-box">
-        <div class="label">Charges annuelles</div>
-        <div class="value" id="charges_annuelles">—</div>
-        <div class="sub">charges + taxe foncière</div>
-      </div>
-    </div>
+```
+<div class="results-grid">
+  <div class="result-box">
+    <div class="label">Rendement brut</div>
+    <div class="value gold" id="rdt_brut">—</div>
+    <div class="sub">loyers / prix total</div>
+  </div>
+  <div class="result-box">
+    <div class="label">Rendement net</div>
+    <div class="value gold" id="rdt_net">—</div>
+    <div class="sub">après charges & taxe</div>
+  </div>
+  <div class="result-box">
+    <div class="label">Loyer effectif</div>
+    <div class="value" id="loyer_effectif">—</div>
+    <div class="sub">avec vacance locative</div>
+  </div>
+  <div class="result-box">
+    <div class="label">Charges annuelles</div>
+    <div class="value" id="charges_annuelles">—</div>
+    <div class="sub">charges + taxe foncière</div>
+  </div>
+</div>
 
-    <div class="cashflow-section">
-      <div class="cashflow-label">Cash-flow mensuel net</div>
-      <div style="font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;margin-bottom:10px">
-        <span id="cashflow_val">—</span>
-      </div>
-      <div class="cashflow-bar-wrap">
-        <div class="cashflow-bar" id="cashflow_bar" style="width:50%;background:var(--green)"></div>
-      </div>
-      <div class="cashflow-numbers">
-        <span style="color:var(--red);font-size:0.68rem">Dépenses : <span id="depenses_val">—</span>/mois</span>
-        <span style="color:var(--green);font-size:0.68rem">Revenus : <span id="revenus_val">—</span>/mois</span>
-      </div>
-    </div>
+<div class="cashflow-section">
+  <div class="cashflow-label">Cash-flow mensuel net</div>
+  <div style="font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;margin-bottom:10px">
+    <span id="cashflow_val">—</span>
+  </div>
+  <div class="cashflow-bar-wrap">
+    <div class="cashflow-bar" id="cashflow_bar" style="width:50%;background:var(--green)"></div>
+  </div>
+  <div class="cashflow-numbers">
+    <span style="color:var(--red);font-size:0.68rem">Dépenses : <span id="depenses_val">—</span>/mois</span>
+    <span style="color:var(--green);font-size:0.68rem">Revenus : <span id="revenus_val">—</span>/mois</span>
+  </div>
+</div>
+```
+
   </div>
 
   <!-- AUTOFINANCEMENT -->
+
   <div class="card">
     <div class="card-title"><span class="icon">⏳</span> Durée d'autofinancement</div>
 
-    <div style="text-align:center;padding:20px 0 16px">
-      <div style="font-size:0.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:12px">Temps pour que les loyers couvrent l'investissement total</div>
-      <div style="font-family:'Playfair Display',serif;font-size:3rem;font-weight:900;color:var(--gold-light)" id="autofin_main">—</div>
-      <div style="font-size:0.72rem;color:var(--muted);margin-top:6px" id="autofin_sub">—</div>
-    </div>
+```
+<div style="text-align:center;padding:20px 0 16px">
+  <div style="font-size:0.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:12px">Temps pour que les loyers couvrent l'investissement total</div>
+  <div style="font-family:'Playfair Display',serif;font-size:3rem;font-weight:900;color:var(--gold-light)" id="autofin_main">—</div>
+  <div style="font-size:0.72rem;color:var(--muted);margin-top:6px" id="autofin_sub">—</div>
+</div>
 
-    <div style="background:var(--surface2);border:1px solid var(--border);padding:16px;border-radius:2px;margin-top:8px">
-      <div style="font-size:0.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:12px">Détail des dépenses mensuelles</div>
-      <div style="font-size:0.78rem;display:flex;flex-direction:column;gap:8px">
-        <div style="display:flex;justify-content:space-between"><span style="color:var(--muted)">Mensualité prêt</span><span id="d_mensualite">—</span></div>
-        <div style="display:flex;justify-content:space-between"><span style="color:var(--muted)">Charges mensuelles</span><span id="d_charges">—</span></div>
-        <div style="display:flex;justify-content:space-between"><span style="color:var(--muted)">Taxe foncière (mois)</span><span id="d_taxe">—</span></div>
-        <div style="display:flex;justify-content:space-between;border-top:1px solid var(--border);padding-top:8px;margin-top:4px;font-weight:500"><span style="color:var(--muted)">Total dépenses/mois</span><span id="d_total">—</span></div>
-        <div style="display:flex;justify-content:space-between"><span style="color:var(--muted)">Revenus locatifs nets/mois</span><span id="d_revenus">—</span></div>
-      </div>
-    </div>
+<div style="background:var(--surface2);border:1px solid var(--border);padding:16px;border-radius:2px;margin-top:8px">
+  <div style="font-size:0.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:12px">Détail des dépenses mensuelles</div>
+  <div style="font-size:0.78rem;display:flex;flex-direction:column;gap:8px">
+    <div style="display:flex;justify-content:space-between"><span style="color:var(--muted)">Mensualité prêt</span><span id="d_mensualite">—</span></div>
+    <div style="display:flex;justify-content:space-between"><span style="color:var(--muted)">Charges mensuelles</span><span id="d_charges">—</span></div>
+    <div style="display:flex;justify-content:space-between"><span style="color:var(--muted)">Taxe foncière (mois)</span><span id="d_taxe">—</span></div>
+    <div style="display:flex;justify-content:space-between;border-top:1px solid var(--border);padding-top:8px;margin-top:4px;font-weight:500"><span style="color:var(--muted)">Total dépenses/mois</span><span id="d_total">—</span></div>
+    <div style="display:flex;justify-content:space-between"><span style="color:var(--muted)">Revenus locatifs nets/mois</span><span id="d_revenus">—</span></div>
+  </div>
+</div>
 
-    <div style="margin-top:14px;text-align:center">
-      <span class="status-pill yellow" id="status_pill"><span class="dot"></span><span id="status_text">Calcul en cours...</span></span>
-    </div>
+<div style="margin-top:14px;text-align:center">
+  <span class="status-pill yellow" id="status_pill"><span class="dot"></span><span id="status_text">Calcul en cours...</span></span>
+</div>
+```
+
   </div>
 
   <!-- BANNIÈRE AUTOFINANCEMENT GLOBAL -->
+
   <div class="autofinancement">
     <div>
       <div class="label">Remboursement total investissement (apport + crédit)</div>
@@ -574,7 +593,9 @@ function calc() {
   const loyer = +document.getElementById('loyer').value || 0;
   const vacance = +document.getElementById('vacance').value || 0;
   const apport = +document.getElementById('apport').value || 0;
-  const emprunt = +document.getElementById('emprunt').value || 0;
+  const prixTotalTemp = prix + agence + Math.round(prix * 0.08);
+  const emprunt = Math.max(0, prixTotalTemp - apport);
+  document.getElementById('emprunt_display').textContent = emprunt.toLocaleString('fr-FR') + ' €';
   const taux = +document.getElementById('taux').value || 0;
   const duree = +document.getElementById('duree').value || 1;
   const salaire = +document.getElementById('salaire').value || 1;
@@ -692,5 +713,6 @@ function calc() {
 
 calc();
 </script>
+
 </body>
 </html>
