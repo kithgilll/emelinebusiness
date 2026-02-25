@@ -49,7 +49,7 @@ margin-bottom: 50px;
 }
 
 header h1 {
-font-family: ‘Playfair Display’, serif;
+font-family: Playfair Display, serif;
 font-size: clamp(2rem, 5vw, 3.5rem);
 font-weight: 900;
 color: var(–gold);
@@ -94,7 +94,7 @@ padding: 28px;
 }
 
 .card-title {
-font-family: ‘Playfair Display’, serif;
+font-family: Playfair Display, serif;
 font-size: 1rem;
 color: var(–gold);
 letter-spacing: 1px;
@@ -193,7 +193,7 @@ margin-bottom: 8px;
 }
 
 .result-box .value {
-font-family: ‘Playfair Display’, serif;
+font-family: Playfair Display, serif;
 font-size: 1.5rem;
 font-weight: 700;
 color: var(–text);
@@ -269,7 +269,7 @@ margin-bottom: 6px;
 }
 
 .autofinancement .main {
-font-family: ‘Playfair Display’, serif;
+font-family: Playfair Display, serif;
 font-size: 2rem;
 font-weight: 900;
 color: var(–gold-light);
@@ -314,6 +314,10 @@ border-radius: 2px;
 background: var(–green);
 transition: width 0.5s, background 0.3s;
 }
+
+.pf { font-family: ‘Playfair Display’, serif; }
+.pf-lg { font-family: ‘Playfair Display’, serif; font-size: 1.8rem; font-weight: 700; margin-bottom: 10px; }
+.pf-xl { font-family: ‘Playfair Display’, serif; font-size: 3rem; font-weight: 900; color: var(–gold-light); min-height: 4rem; display: flex; align-items: center; justify-content: center; }
 </style>
 
 </head>
@@ -366,7 +370,7 @@ transition: width 0.5s, background 0.3s;
     <div style="display:flex;justify-content:space-between"><span style="color:var(--muted)">Frais de notaire (8%)</span><span id="recap_notaire">—</span></div>
     <div style="display:flex;justify-content:space-between;border-top:1px solid rgba(201,168,76,0.2);padding-top:8px;margin-top:2px">
       <span style="color:var(--gold-light);font-weight:500">Total acquisition</span>
-      <span style="color:var(--gold-light);font-family:'Playfair Display',serif;font-size:1rem;font-weight:700" id="recap_total">—</span>
+      <span style="color:var(--gold-light);font-family:Playfair Display,serif;font-size:1rem;font-weight:700" id="recap_total">—</span>
     </div>
   </div>
 </div>
@@ -432,7 +436,7 @@ transition: width 0.5s, background 0.3s;
 <div class="field">
   <label>Montant à emprunter <span style="color:var(--gold);font-size:0.6rem;letter-spacing:1px">(coût total &minus; apport)</span></label>
   <div class="field-row">
-    <div style="width:100%;background:var(--surface2);border:1px solid rgba(201,168,76,0.25);padding:10px 14px;border-radius:2px;font-size:0.9rem;color:var(--gold-light);font-family:'Playfair Display',serif;font-weight:700" id="emprunt_display">—</div>
+    <div style="width:100%;background:var(--surface2);border:1px solid rgba(201,168,76,0.25);padding:10px 14px;border-radius:2px;font-size:0.9rem;color:var(--gold-light);font-family:Playfair Display,serif;font-weight:700" id="emprunt_display">—</div>
     <span class="unit">€</span>
   </div>
 </div>
@@ -522,13 +526,13 @@ transition: width 0.5s, background 0.3s;
 
 <div class="cashflow-section">
   <div class="cashflow-label">Cash-flow mensuel net</div>
-  <div style="font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;margin-bottom:10px">
+  <div class="pf-lg">
     <span id="cashflow_val">—</span>
   </div>
   <div class="cashflow-bar-wrap">
     <div class="cashflow-bar" id="cashflow_bar" style="width:50%;background:var(--green)"></div>
   </div>
-  <div class="cashflow-numbers">
+  <div class="cashflow-numbers" style="flex-wrap:wrap;gap:4px;">
     <span style="color:var(--red);font-size:0.68rem">Dépenses : <span id="depenses_val">—</span>/mois</span>
     <span style="color:var(--green);font-size:0.68rem">Revenus : <span id="revenus_val">—</span>/mois</span>
   </div>
@@ -545,8 +549,8 @@ transition: width 0.5s, background 0.3s;
 ```
 <div style="text-align:center;padding:20px 0 16px">
   <div style="font-size:0.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:12px">Temps pour que les loyers couvrent l'investissement total</div>
-  <div style="font-family:'Playfair Display',serif;font-size:3rem;font-weight:900;color:var(--gold-light)" id="autofin_main">—</div>
-  <div style="font-size:0.72rem;color:var(--muted);margin-top:6px" id="autofin_sub">—</div>
+  <div class="pf-xl" id="autofin_main"></div>
+  <div style="font-size:0.72rem;color:var(--muted);margin-top:6px" id="autofin_sub"></div>
 </div>
 
 <div style="background:var(--surface2);border:1px solid var(--border);padding:16px;border-radius:2px;margin-top:8px">
@@ -690,13 +694,15 @@ function calc() {
   if (cashflow >= 0) {
     pill.className = 'status-pill green';
     statusText.textContent = 'Le bien s\'autofinance dès maintenant ✓';
+    document.getElementById('autofin_main').style.color = 'var(--gold-light)';
     document.getElementById('autofin_main').textContent = 'Dès J+1';
     document.getElementById('autofin_sub').textContent = 'Les loyers couvrent toutes vos dépenses mensuelles';
   } else {
     pill.className = 'status-pill red';
     statusText.textContent = 'Effort d\'épargne mensuel nécessaire';
-    document.getElementById('autofin_main').textContent = '— ';
-    document.getElementById('autofin_sub').textContent = `Effort mensuel : ${fmt(Math.abs(cashflow), 0)}/mois`;
+    document.getElementById('autofin_main').style.color = 'var(--red)';
+    document.getElementById('autofin_main').textContent = fmt(Math.abs(cashflow), 0) + '/mois';
+    document.getElementById('autofin_sub').textContent = 'Effort mensuel à combler';
   }
 
   // Durée remboursement global (apport + cout credit vs loyers cumulés nets de charges)
