@@ -1157,16 +1157,8 @@
       <div class="treso-box" style="border-color:var(--gold)"><div class="lbl">Cumul fin d'année</div><div class="val" id="ts_cumul_an">—</div></div>
     </div>
 
-    <!-- Onglets graphiques -->
-    <div class="chart-tabs">
-      <button class="chart-tab active" onclick="switchChartTab('mensuel')">Trésorerie mensuelle</button>
-      <button class="chart-tab" onclick="switchChartTab('cumul')">Cumul trésorerie</button>
-      <button class="chart-tab" onclick="switchChartTab('patrimoine')">Évolution patrimoine</button>
-      <button class="chart-tab" onclick="switchChartTab('depenses')">Répartition dépenses</button>
-      <button class="chart-tab" onclick="switchChartTab('annuel')">Résumé annuel</button>
-    </div>
-
-    <div class="chart-area" id="chart_area">
+    <!-- Graphique cumul trésorerie uniquement -->
+    <div class="chart-area" id="chart_area" style="margin-top:8px;">
       <div style="text-align:center;color:var(--muted);padding:40px;font-size:0.78rem;">Renseignez vos données ci-dessus pour afficher les graphiques.</div>
     </div>
   </div>
@@ -1195,8 +1187,9 @@
         <div id="kt_residuel" style="font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:700;color:var(--cyan)">—</div>
       </div>
       <div style="background:var(--surface2);border:1px solid var(--border);padding:16px;border-radius:2px;text-align:center;">
-        <div style="font-size:0.58rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;">Cashflow immo/mois</div>
+        <div style="font-size:0.58rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;">Épargne mensuelle totale</div>
         <div id="kt_cashflow" style="font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:700;">—</div>
+        <div id="kt_cashflow_detail" style="font-size:0.62rem;color:var(--muted);margin-top:4px;">—</div>
       </div>
       <div style="background:var(--surface2);border:1px solid var(--border);padding:16px;border-radius:2px;text-align:center;">
         <div style="font-size:0.58rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;">Reconstitution apport</div>
@@ -1569,8 +1562,8 @@ function calcTreso() {
   const rp = +document.getElementById('ep_rp').value || 0;
   const dettes = +document.getElementById('ep_dettes').value || 0;
   const epargneInitiale = livrets + av + pea + epAutres + rp - dettes;
-  // Patrimoine net = épargne après apport, qui évolue avec le cashflow immo (loyer - mensualité - charges)
-  const cashflowImmo = loyerEffectif - depensesBien;
+  // Patrimoine net = épargne après apport, qui évolue avec le solde mensuel total
+  // (salaire + loyer effectif - mensualité - charges - taxe - dépenses vie)
   const patrimoineDepart = epargneInitiale - apport;
 
   const monthsData = [];
@@ -1581,7 +1574,7 @@ function calcTreso() {
     const moisIdx = (moisDepart + i) % 12;
     const annee = anneeDepart + Math.floor((moisDepart+i)/12);
     cumul += solde;
-    patrimoine += cashflowImmo;
+    patrimoine += solde; // salaire + loyer - mensualité - charges - dépenses vie
     monthsData.push({
       label: moisLabels[moisIdx] + ' ' + annee,
       mois: moisLabels[moisIdx], annee,
@@ -1597,7 +1590,7 @@ function calcTreso() {
   cumulEl.style.color = cumulAn >= 0 ? 'var(--green)' : 'var(--red)';
 
   drawChart(monthsData, currentChartTab, depensesVie, depensesBien, salaire, loyerEffectif, patrimoineDepart);
-  calcSuiviTreso(mensualite, loyerEffectif, depensesBien, horizon, moisDepart, anneeDepart, moisLabels);
+  calcSuiviTreso(mensualite, loyerEffectif, depensesBien, depensesVie, salaire, horizon, moisDepart, anneeDepart, moisLabels);
 }
 
 // =================== GRAPHIQUES SVG ===================
@@ -1619,11 +1612,7 @@ function switchChartTab(tab) {
 function drawChart(data, tab, depVie, depBien, salaire, loyerEff, patrimoineDepart) {
   const area = document.getElementById('chart_area');
   if (!data.length) { area.innerHTML = '<div style="text-align:center;color:var(--muted);padding:40px;">Aucune donnée.</div>'; return; }
-  if (tab === 'mensuel') drawBarChart(area, data);
-  else if (tab === 'cumul') drawCumulChart(area, data);
-  else if (tab === 'patrimoine') drawPatrimoineChart(area, data, patrimoineDepart);
-  else if (tab === 'depenses') drawPieChart(area, depVie, depBien, salaire, loyerEff);
-  else if (tab === 'annuel') drawAnnualTable(area, data);
+  drawCumulChart(area, data);
 }
 
 function drawBarChart(area, data) {
@@ -1758,12 +1747,14 @@ function drawAnnualTable(area, data) {
 }
 
 // =================== SUIVI TRÉSORERIE CASH ===================
-function calcSuiviTreso(mensualite, loyerEffectif, depensesBien, horizon, moisDepart, anneeDepart, moisLabels) {
+function calcSuiviTreso(mensualite, loyerEffectif, depensesBien, depensesVie, salaire, horizon, moisDepart, anneeDepart, moisLabels) {
   const tresoInit = +document.getElementById('ep_treso_init').value || 0;
   const apport = +document.getElementById('apport').value || 0;
 
-  // cashflow immobilier mensuel = loyer effectif - mensualité - charges - taxe/12
-  const cashflow = loyerEffectif - depensesBien;
+  // cashflow total = loyer effectif - mensualité - charges - taxe/12 + salaire - dépenses vie
+  const cashflowImmo = loyerEffectif - depensesBien;
+  const epargneNette = salaire - depensesVie;
+  const cashflow = cashflowImmo + epargneNette;
 
   // trésorerie résiduelle après apport
   const tresoResiduelle = tresoInit - apport;
@@ -1780,6 +1771,9 @@ function calcSuiviTreso(mensualite, loyerEffectif, depensesBien, horizon, moisDe
   const cfEl = document.getElementById('kt_cashflow');
   cfEl.textContent = (cashflow >= 0 ? '+' : '') + Math.round(cashflow).toLocaleString('fr-FR') + ' €/mois';
   cfEl.style.color = cashflow >= 0 ? 'var(--green)' : cashflow > -100 ? 'var(--gold-light)' : 'var(--red)';
+  // Sous-détail : cashflow immo + épargne salaire
+  const cfImmoEl = document.getElementById('kt_cashflow_detail');
+  if (cfImmoEl) cfImmoEl.textContent = 'Immo: ' + (cashflowImmo >= 0 ? '+' : '') + Math.round(cashflowImmo).toLocaleString('fr-FR') + ' € | Salaire: +' + Math.round(epargneNette).toLocaleString('fr-FR') + ' €';
 
   // Reconstitution de l'apport grâce au cashflow
   const reconsEl = document.getElementById('kt_recons');
