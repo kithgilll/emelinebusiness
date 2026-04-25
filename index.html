@@ -1042,6 +1042,13 @@
           <span class="unit">€</span>
         </div>
       </div>
+      <div class="ep-field" style="border:1px solid rgba(6,182,212,0.3);border-radius:2px;padding:10px 12px;background:rgba(6,182,212,0.04)">
+        <label style="color:var(--cyan)">💵 Trésorerie initiale (cash disponible)</label>
+        <div class="ep-field-row">
+          <input type="number" id="ep_treso_init" value="60000" oninput="calcEpargne()" style="border-color:rgba(6,182,212,0.4)!important">
+          <span class="unit">€</span>
+        </div>
+      </div>
     </div>
 
     <!-- Résumé patrimoine -->
@@ -1161,6 +1168,56 @@
 
     <div class="chart-area" id="chart_area">
       <div style="text-align:center;color:var(--muted);padding:40px;font-size:0.78rem;">Renseignez vos données ci-dessus pour afficher les graphiques.</div>
+    </div>
+  </div>
+
+  <!-- ===== MODULE SUIVI TRÉSORERIE CASH ===== -->
+  <div style="grid-column:1/-1;background:var(--surface);border:1px solid rgba(6,182,212,0.35);border-radius:2px;padding:28px;" id="suivi_treso_section">
+    <div class="card-title" style="font-family:'Playfair Display',serif;font-size:1rem;letter-spacing:1px;margin-bottom:8px;padding-bottom:14px;color:var(--cyan);border-bottom-color:rgba(6,182,212,0.25)">
+      <span class="icon">📈</span> Suivi de Trésorerie — Évolution du cash
+    </div>
+    <div style="font-size:0.68rem;color:var(--muted);margin-bottom:24px;line-height:1.7;">
+      Partez de votre trésorerie initiale, déduisez l'apport, puis suivez l'accumulation du cashflow mensuel (loyer − mensualité − charges) mois par mois.
+    </div>
+
+    <!-- KPIs tréso -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px;margin-bottom:28px;" id="kpi_treso_wrap">
+      <div style="background:var(--surface2);border:1px solid var(--border);padding:16px;border-radius:2px;text-align:center;">
+        <div style="font-size:0.58rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;">Tréso. initiale</div>
+        <div id="kt_init" style="font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:700;color:var(--cyan)">—</div>
+      </div>
+      <div style="background:var(--surface2);border:1px solid var(--border);padding:16px;border-radius:2px;text-align:center;">
+        <div style="font-size:0.58rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;">Apport investi</div>
+        <div id="kt_apport" style="font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:700;color:var(--red)">—</div>
+      </div>
+      <div style="background:var(--surface2);border:1px solid rgba(6,182,212,0.4);padding:16px;border-radius:2px;text-align:center;background:rgba(6,182,212,0.05)">
+        <div style="font-size:0.58rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;">Cash résiduel J0</div>
+        <div id="kt_residuel" style="font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:700;color:var(--cyan)">—</div>
+      </div>
+      <div style="background:var(--surface2);border:1px solid var(--border);padding:16px;border-radius:2px;text-align:center;">
+        <div style="font-size:0.58rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;">Cashflow immo/mois</div>
+        <div id="kt_cashflow" style="font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:700;">—</div>
+      </div>
+      <div style="background:var(--surface2);border:1px solid var(--border);padding:16px;border-radius:2px;text-align:center;">
+        <div style="font-size:0.58rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;">Reconstitution apport</div>
+        <div id="kt_recons" style="font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--gold-light)">—</div>
+      </div>
+      <div style="background:var(--surface2);border:1px solid rgba(201,168,76,0.4);padding:16px;border-radius:2px;text-align:center;background:rgba(201,168,76,0.04)">
+        <div style="font-size:0.58rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;">Cash fin d'horizon</div>
+        <div id="kt_fin" style="font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:700;color:var(--gold-light)">—</div>
+      </div>
+    </div>
+
+    <!-- Graphique évolution cash -->
+    <div style="background:rgba(0,0,0,0.3);border:1px solid var(--border);border-radius:2px;padding:16px;overflow-x:auto;" id="chart_treso_cash">
+      <div style="text-align:center;color:var(--muted);padding:40px;font-size:0.78rem;">Renseignez vos données pour afficher le graphique.</div>
+    </div>
+
+    <!-- Tableau mensuel détaillé -->
+    <div style="margin-top:20px;">
+      <div style="font-size:0.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;">Tableau détaillé mois par mois</div>
+      <div style="overflow-x:auto;" id="table_treso_cash">
+      </div>
     </div>
   </div>
 
@@ -1512,7 +1569,9 @@ function calcTreso() {
   const rp = +document.getElementById('ep_rp').value || 0;
   const dettes = +document.getElementById('ep_dettes').value || 0;
   const epargneInitiale = livrets + av + pea + epAutres + rp - dettes;
-  const patrimoineDepart = epargneInitiale - apport + prixTotal; // net après investissement
+  // Patrimoine net = épargne après apport, qui évolue avec le cashflow immo (loyer - mensualité - charges)
+  const cashflowImmo = loyerEffectif - depensesBien;
+  const patrimoineDepart = epargneInitiale - apport;
 
   const monthsData = [];
   let cumul = 0;
@@ -1522,7 +1581,7 @@ function calcTreso() {
     const moisIdx = (moisDepart + i) % 12;
     const annee = anneeDepart + Math.floor((moisDepart+i)/12);
     cumul += solde;
-    patrimoine += solde;
+    patrimoine += cashflowImmo;
     monthsData.push({
       label: moisLabels[moisIdx] + ' ' + annee,
       mois: moisLabels[moisIdx], annee,
@@ -1538,6 +1597,7 @@ function calcTreso() {
   cumulEl.style.color = cumulAn >= 0 ? 'var(--green)' : 'var(--red)';
 
   drawChart(monthsData, currentChartTab, depensesVie, depensesBien, salaire, loyerEffectif, patrimoineDepart);
+  calcSuiviTreso(mensualite, loyerEffectif, depensesBien, horizon, moisDepart, anneeDepart, moisLabels);
 }
 
 // =================== GRAPHIQUES SVG ===================
@@ -1615,27 +1675,44 @@ function drawCumulChart(area, data) {
 
 function drawPatrimoineChart(area, data, patrimoineDepart) {
   const W=800,H=320,pad=80,padR=20,padB=60;
-  const vals=data.map(d=>d.patrimoine);
-  const minV=Math.min(...vals, patrimoineDepart, 0);
-  const maxV=Math.max(...vals, patrimoineDepart);
-  const range=Math.max(maxV-minV,1);
-  const chartH=H-pad-padB,chartW=W-pad-padR;
-  const toX=i=>pad+(i/(data.length-1||1))*chartW;
-  const toY=v=>pad+chartH-((v-minV)/range)*chartH;
-  let polyline=data.map((d,i)=>`${toX(i).toFixed(1)},${toY(d.patrimoine).toFixed(1)}`).join(' ');
-  let fillPath=`M ${toX(0).toFixed(1)} ${toY(minV).toFixed(1)} `;
-  data.forEach((d,i)=>{fillPath+=`L ${toX(i).toFixed(1)} ${toY(d.patrimoine).toFixed(1)} `;});
-  fillPath+=`L ${toX(data.length-1).toFixed(1)} ${toY(minV).toFixed(1)} Z`;
-  let dots='',xLabels='',yLines='';
-  data.forEach((d,i)=>{
-    if(i%Math.max(1,Math.floor(data.length/8))===0||data.length<=8){
-      dots+=`<circle cx="${toX(i).toFixed(1)}" cy="${toY(d.patrimoine).toFixed(1)}" r="4" fill="#a78bfa"><title>${d.label} — Patrimoine : ${Math.round(d.patrimoine).toLocaleString('fr-FR')} €</title></circle>`;
-      xLabels+=`<text x="${toX(i).toFixed(1)}" y="${H-padB+18}" text-anchor="middle" fill="#7a7060" font-size="10">${d.mois}</text><text x="${toX(i).toFixed(1)}" y="${H-padB+30}" text-anchor="middle" fill="#5a5040" font-size="9">${d.annee}</text>`;
+  // On inclut le point J0 (patrimoineDepart) en tête de liste
+  const allPoints = [{patrimoine: patrimoineDepart, label: 'Départ', mois: 'J0', annee: ''}].concat(data);
+  const vals = allPoints.map(d => d.patrimoine);
+  const minV = Math.min(...vals, 0);
+  const maxV = Math.max(...vals, 1);
+  const range = Math.max(maxV - minV, 1);
+  const chartH = H - pad - padB, chartW = W - pad - padR;
+  const toX = i => pad + (i / (allPoints.length - 1 || 1)) * chartW;
+  const toY = v => pad + chartH - ((v - minV) / range) * chartH;
+  let polyline = allPoints.map((d,i) => `${toX(i).toFixed(1)},${toY(d.patrimoine).toFixed(1)}`).join(' ');
+  let fillPath = `M ${toX(0).toFixed(1)} ${toY(minV).toFixed(1)} `;
+  allPoints.forEach((d,i) => { fillPath += `L ${toX(i).toFixed(1)} ${toY(d.patrimoine).toFixed(1)} `; });
+  fillPath += `L ${toX(allPoints.length-1).toFixed(1)} ${toY(minV).toFixed(1)} Z`;
+  let dots = '', xLabels = '', yLines = '';
+  allPoints.forEach((d,i) => {
+    const isStart = i === 0;
+    const show = isStart || i % Math.max(1, Math.floor((allPoints.length-1) / 8)) === 0 || allPoints.length <= 9;
+    if (show) {
+      const col = isStart ? '#c9a84c' : '#a78bfa';
+      const r = isStart ? 6 : 4;
+      dots += `<circle cx="${toX(i).toFixed(1)}" cy="${toY(d.patrimoine).toFixed(1)}" r="${r}" fill="${col}"><title>${d.label || 'J0'} — ${Math.round(d.patrimoine).toLocaleString('fr-FR')} €</title></circle>`;
+      xLabels += `<text x="${toX(i).toFixed(1)}" y="${H-padB+18}" text-anchor="middle" fill="#7a7060" font-size="10">${d.mois}</text>`;
+      if (d.annee) xLabels += `<text x="${toX(i).toFixed(1)}" y="${H-padB+30}" text-anchor="middle" fill="#5a5040" font-size="9">${d.annee}</text>`;
     }
   });
   for(let i=0;i<=4;i++){const v=minV+(range*i/4),y=toY(v).toFixed(1);yLines+=`<line x1="${pad}" y1="${y}" x2="${W-padR}" y2="${y}" stroke="#2a2a2a" stroke-width="1" stroke-dasharray="4,4"/><text x="${pad-6}" y="${(+y+4).toFixed(1)}" text-anchor="end" fill="#5a5040" font-size="9">${Math.round(v).toLocaleString('fr-FR')}</text>`;}
-  const startY=toY(patrimoineDepart).toFixed(1);
-  area.innerHTML=`<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;min-height:240px;"><text x="${W/2}" y="20" text-anchor="middle" fill="#c9a84c" font-size="13" font-family="serif">Évolution du patrimoine net (€)</text>${yLines}<path d="${fillPath}" fill="#a78bfa" opacity="0.07"/><polyline points="${polyline}" fill="none" stroke="#a78bfa" stroke-width="2.5" stroke-linejoin="round"/>${dots}${xLabels}<line x1="${pad}" y1="${startY}" x2="${W-padR}" y2="${startY}" stroke="#a78bfa" stroke-width="1" stroke-dasharray="6,3" opacity="0.4"/><text x="${pad+4}" y="${(+startY-6).toFixed(1)}" fill="#a78bfa" font-size="9" opacity="0.7">Patrimoine initial post-investissement</text><line x1="${pad}" y1="${pad}" x2="${pad}" y2="${H-padB}" stroke="#3a3a3a" stroke-width="1"/><line x1="${pad}" y1="${H-padB}" x2="${W-padR}" y2="${H-padB}" stroke="#3a3a3a" stroke-width="1"/></svg>`;
+  const startY = toY(patrimoineDepart).toFixed(1);
+  area.innerHTML = `<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;min-height:240px;">
+    <text x="${W/2}" y="20" text-anchor="middle" fill="#c9a84c" font-size="13" font-family="serif">Évolution du patrimoine net — épargne après apport (€)</text>
+    ${yLines}
+    <path d="${fillPath}" fill="#a78bfa" opacity="0.07"/>
+    <polyline points="${polyline}" fill="none" stroke="#a78bfa" stroke-width="2.5" stroke-linejoin="round"/>
+    ${dots}${xLabels}
+    <line x1="${pad}" y1="${startY}" x2="${W-padR}" y2="${startY}" stroke="#c9a84c" stroke-width="1" stroke-dasharray="6,3" opacity="0.5"/>
+    <text x="${pad+4}" y="${(+startY-6).toFixed(1)}" fill="#c9a84c" font-size="9" opacity="0.8">Départ : ${Math.round(patrimoineDepart).toLocaleString('fr-FR')} € (épargne − apport)</text>
+    <line x1="${pad}" y1="${pad}" x2="${pad}" y2="${H-padB}" stroke="#3a3a3a" stroke-width="1"/>
+    <line x1="${pad}" y1="${H-padB}" x2="${W-padR}" y2="${H-padB}" stroke="#3a3a3a" stroke-width="1"/>
+  </svg>`;
 }
 
 function drawPieChart(area, depVie, depBien, salaire, loyerEffectif) {
@@ -1680,11 +1757,193 @@ function drawAnnualTable(area, data) {
   area.innerHTML=`<div style="overflow-x:auto;"><table class="annual-table"><thead><tr><th style="text-align:left">Année</th><th>Revenus totaux</th><th>Dép. bien</th><th>Dép. vie</th><th>Total dép.</th><th>Solde annuel</th><th style="color:var(--purple)">Patrimoine fin</th></tr></thead><tbody>${rows}</tbody></table></div>`;
 }
 
+// =================== SUIVI TRÉSORERIE CASH ===================
+function calcSuiviTreso(mensualite, loyerEffectif, depensesBien, horizon, moisDepart, anneeDepart, moisLabels) {
+  const tresoInit = +document.getElementById('ep_treso_init').value || 0;
+  const apport = +document.getElementById('apport').value || 0;
+
+  // cashflow immobilier mensuel = loyer effectif - mensualité - charges - taxe/12
+  const cashflow = loyerEffectif - depensesBien;
+
+  // trésorerie résiduelle après apport
+  const tresoResiduelle = tresoInit - apport;
+
+  // KPIs
+  document.getElementById('kt_init').textContent = tresoInit.toLocaleString('fr-FR') + ' €';
+  const apportEl = document.getElementById('kt_apport');
+  apportEl.textContent = '− ' + apport.toLocaleString('fr-FR') + ' €';
+
+  const residEl = document.getElementById('kt_residuel');
+  residEl.textContent = tresoResiduelle.toLocaleString('fr-FR') + ' €';
+  residEl.style.color = tresoResiduelle >= 0 ? 'var(--cyan)' : 'var(--red)';
+
+  const cfEl = document.getElementById('kt_cashflow');
+  cfEl.textContent = (cashflow >= 0 ? '+' : '') + Math.round(cashflow).toLocaleString('fr-FR') + ' €/mois';
+  cfEl.style.color = cashflow >= 0 ? 'var(--green)' : cashflow > -100 ? 'var(--gold-light)' : 'var(--red)';
+
+  // Reconstitution de l'apport grâce au cashflow
+  const reconsEl = document.getElementById('kt_recons');
+  if (cashflow > 0) {
+    const moisRecons = Math.ceil(apport / cashflow);
+    const ans = Math.floor(moisRecons/12), moisR = moisRecons % 12;
+    let txt = '';
+    if (ans > 0) txt += ans + ' an' + (ans > 1 ? 's' : '');
+    if (moisR > 0) txt += (txt ? ' ' : '') + moisR + ' mois';
+    reconsEl.textContent = txt || '< 1 mois';
+    reconsEl.style.color = 'var(--gold-light)';
+  } else {
+    reconsEl.textContent = cashflow === 0 ? '∞' : 'Effort mensuel';
+    reconsEl.style.color = 'var(--red)';
+  }
+
+  // Données mensuelles cash
+  const data = [];
+  let treso = tresoResiduelle;
+  for (let i = 0; i < horizon; i++) {
+    const moisIdx = (moisDepart + i) % 12;
+    const annee = anneeDepart + Math.floor((moisDepart + i) / 12);
+    treso += cashflow;
+    data.push({
+      label: moisLabels[moisIdx] + ' ' + annee,
+      mois: moisLabels[moisIdx],
+      annee,
+      cashflow,
+      treso: Math.round(treso)
+    });
+  }
+
+  const finTreso = data.length ? data[data.length - 1].treso : tresoResiduelle;
+  const finEl = document.getElementById('kt_fin');
+  finEl.textContent = finTreso.toLocaleString('fr-FR') + ' €';
+  finEl.style.color = finTreso >= tresoInit ? 'var(--green)' : finTreso >= 0 ? 'var(--gold-light)' : 'var(--red)';
+
+  // Graphique courbe trésorerie
+  drawTresoChart(data, tresoResiduelle, tresoInit, apport);
+
+  // Tableau détaillé
+  drawTresoTable(data, tresoInit, apport, tresoResiduelle);
+}
+
+function drawTresoChart(data, tresoResiduelle, tresoInit, apport) {
+  const area = document.getElementById('chart_treso_cash');
+  if (!data.length) return;
+
+  const W = 800, H = 320, pad = 80, padR = 20, padB = 60;
+  const allVals = data.map(d => d.treso).concat([tresoResiduelle, 0]);
+  const minV = Math.min(...allVals);
+  const maxV = Math.max(...allVals, tresoInit);
+  const range = Math.max(maxV - minV, 1);
+  const chartH = H - pad - padB, chartW = W - pad - padR;
+
+  const toX = i => pad + (i / (data.length)) * chartW;
+  const toY = v => pad + chartH - ((v - minV) / range) * chartH;
+
+  // Point de départ (J0 = résiduel après apport)
+  const x0 = pad;
+  const y0 = toY(tresoResiduelle).toFixed(1);
+
+  let polyline = `${x0},${y0} ` + data.map((d, i) => `${toX(i+1).toFixed(1)},${toY(d.treso).toFixed(1)}`).join(' ');
+
+  // Zone remplie
+  const zeroY = toY(Math.max(minV, 0)).toFixed(1);
+  let fillPath = `M ${x0} ${zeroY} L ${x0} ${y0} `;
+  data.forEach((d, i) => { fillPath += `L ${toX(i+1).toFixed(1)} ${toY(d.treso).toFixed(1)} `; });
+  fillPath += `L ${toX(data.length).toFixed(1)} ${zeroY} Z`;
+
+  // Ligne tréso initiale
+  const yInit = toY(tresoInit).toFixed(1);
+
+  let dots = '', xLabels = '', yLines = '';
+
+  // Dot J0
+  dots += `<circle cx="${x0}" cy="${y0}" r="5" fill="var(--cyan)"><title>J0 — Cash résiduel : ${Math.round(tresoResiduelle).toLocaleString('fr-FR')} €</title></circle>`;
+  xLabels += `<text x="${x0}" y="${H - padB + 18}" text-anchor="middle" fill="#06b6d4" font-size="10">J0</text>`;
+
+  data.forEach((d, i) => {
+    const cx = toX(i+1).toFixed(1);
+    const cy = toY(d.treso).toFixed(1);
+    const color = d.treso >= tresoInit ? '#4caf50' : d.treso >= 0 ? '#06b6d4' : '#ef5350';
+    if (i % Math.max(1, Math.floor(data.length / 8)) === 0 || data.length <= 8) {
+      dots += `<circle cx="${cx}" cy="${cy}" r="4" fill="${color}"><title>${d.label} — Trésorerie : ${d.treso.toLocaleString('fr-FR')} €</title></circle>`;
+      xLabels += `<text x="${cx}" y="${H - padB + 18}" text-anchor="middle" fill="#7a7060" font-size="10">${d.mois}</text><text x="${cx}" y="${H - padB + 30}" text-anchor="middle" fill="#5a5040" font-size="9">${d.annee}</text>`;
+    }
+  });
+
+  for (let i = 0; i <= 4; i++) {
+    const v = minV + (range * i / 4);
+    const y = toY(v).toFixed(1);
+    yLines += `<line x1="${pad}" y1="${y}" x2="${W - padR}" y2="${y}" stroke="#2a2a2a" stroke-width="1" stroke-dasharray="4,4"/>`;
+    yLines += `<text x="${pad - 6}" y="${(+y + 4).toFixed(1)}" text-anchor="end" fill="#5a5040" font-size="9">${Math.round(v).toLocaleString('fr-FR')}</text>`;
+  }
+
+  const lastColor = data[data.length-1]?.treso >= tresoInit ? '#4caf50' : '#06b6d4';
+
+  area.innerHTML = `<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;min-height:240px;">
+    <text x="${W/2}" y="20" text-anchor="middle" fill="#c9a84c" font-size="13" font-family="serif">Évolution de la trésorerie (€)</text>
+    ${yLines}
+    <path d="${fillPath}" fill="${lastColor}" opacity="0.08"/>
+    <polyline points="${polyline}" fill="none" stroke="${lastColor}" stroke-width="2.5" stroke-linejoin="round"/>
+    ${dots}
+    ${xLabels}
+    <line x1="${pad}" y1="${yInit}" x2="${W - padR}" y2="${yInit}" stroke="#c9a84c" stroke-width="1" stroke-dasharray="6,3" opacity="0.5"/>
+    <text x="${pad + 4}" y="${(+yInit - 5).toFixed(1)}" fill="#c9a84c" font-size="9" opacity="0.8">Tréso. initiale (${Math.round(tresoInit).toLocaleString('fr-FR')} €)</text>
+    <line x1="${pad}" y1="${y0}" x2="${W - padR}" y2="${y0}" stroke="#06b6d4" stroke-width="1" stroke-dasharray="3,4" opacity="0.35"/>
+    <text x="${pad + 4}" y="${(+y0 + 12).toFixed(1)}" fill="#06b6d4" font-size="9" opacity="0.7">Cash J0 après apport (${Math.round(tresoResiduelle).toLocaleString('fr-FR')} €)</text>
+    <line x1="${pad}" y1="${pad}" x2="${pad}" y2="${H - padB}" stroke="#3a3a3a" stroke-width="1"/>
+    <line x1="${pad}" y1="${H - padB}" x2="${W - padR}" y2="${H - padB}" stroke="#3a3a3a" stroke-width="1"/>
+  </svg>`;
+}
+
+function drawTresoTable(data, tresoInit, apport, tresoResiduelle) {
+  const area = document.getElementById('table_treso_cash');
+  const cashflow = data.length ? data[0].cashflow : 0;
+  let rows = `<tr style="background:rgba(6,182,212,0.06)">
+    <td style="color:var(--cyan);font-family:'Playfair Display',serif;font-weight:700">J0</td>
+    <td style="text-align:right;color:var(--cyan)">${tresoInit.toLocaleString('fr-FR')} €</td>
+    <td style="text-align:right;color:var(--red)">− ${apport.toLocaleString('fr-FR')} €</td>
+    <td style="text-align:right;color:var(--muted)">—</td>
+    <td style="text-align:right;color:var(--cyan);font-weight:700">${tresoResiduelle.toLocaleString('fr-FR')} €</td>
+    <td style="text-align:right;color:var(--muted)">—</td>
+  </tr>`;
+
+  data.forEach((d, i) => {
+    const prev = i === 0 ? tresoResiduelle : data[i-1].treso;
+    const vs = d.treso >= tresoInit;
+    const col = vs ? 'var(--green)' : d.treso >= 0 ? 'var(--text)' : 'var(--red)';
+    const cfCol = d.cashflow >= 0 ? 'var(--green)' : 'var(--red)';
+    const diff = d.treso - tresoInit;
+    const diffStr = (diff >= 0 ? '+' : '') + Math.round(diff).toLocaleString('fr-FR') + ' €';
+    const diffCol = diff >= 0 ? 'var(--green)' : 'var(--red)';
+    rows += `<tr>
+      <td style="color:var(--gold-light);font-family:'Playfair Display',serif">${d.label}</td>
+      <td style="text-align:right;color:var(--muted)">${prev.toLocaleString('fr-FR')} €</td>
+      <td style="text-align:right;color:var(--muted)">—</td>
+      <td style="text-align:right;color:${cfCol}">${d.cashflow >= 0 ? '+' : ''}${Math.round(d.cashflow).toLocaleString('fr-FR')} €</td>
+      <td style="text-align:right;color:${col};font-weight:600">${d.treso.toLocaleString('fr-FR')} €</td>
+      <td style="text-align:right;color:${diffCol};font-size:0.75rem">${diffStr}</td>
+    </tr>`;
+  });
+
+  area.innerHTML = `<table style="width:100%;border-collapse:collapse;font-size:0.77rem;">
+    <thead>
+      <tr>
+        <th style="text-align:left;font-size:0.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);padding:8px 10px;border-bottom:1px solid var(--border);">Mois</th>
+        <th style="text-align:right;font-size:0.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);padding:8px 10px;border-bottom:1px solid var(--border);">Tréso. début</th>
+        <th style="text-align:right;font-size:0.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);padding:8px 10px;border-bottom:1px solid var(--border);">Apport</th>
+        <th style="text-align:right;font-size:0.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);padding:8px 10px;border-bottom:1px solid var(--border);">Cashflow immo</th>
+        <th style="text-align:right;font-size:0.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);padding:8px 10px;border-bottom:1px solid var(--border);">Trésorerie</th>
+        <th style="text-align:right;font-size:0.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);padding:8px 10px;border-bottom:1px solid var(--border);">vs Init.</th>
+      </tr>
+    </thead>
+    <tbody>${rows}</tbody>
+  </table>`;
+}
+
 // =================== SAUVEGARDE / CHARGEMENT ===================
 function getSimData() {
   const ids = ['prix','agence','surface','charges','taxe','loyer','vacance','apport','taux','duree','salaire',
     'd_alim','d_transport','d_tel','d_abos','d_ass_voiture','d_ass_hab','d_loisirs','d_achats',
-    'ep_livrets','ep_av','ep_pea','ep_autres','ep_rp','ep_dettes',
+    'ep_livrets','ep_av','ep_pea','ep_autres','ep_rp','ep_dettes','ep_treso_init',
     'annonce_url','annonce_titre','annonce_ville','annonce_type','annonce_dpe','annonce_etage','annonce_statut','annonce_notes',
     'mois_depart','annee_depart','horizon'];
   const data = {};
@@ -1700,7 +1959,7 @@ function getSimData() {
 function loadSimData(data) {
   const ids = ['prix','agence','surface','charges','taxe','loyer','vacance','apport','taux','duree','salaire',
     'd_alim','d_transport','d_tel','d_abos','d_ass_voiture','d_ass_hab','d_loisirs','d_achats',
-    'ep_livrets','ep_av','ep_pea','ep_autres','ep_rp','ep_dettes',
+    'ep_livrets','ep_av','ep_pea','ep_autres','ep_rp','ep_dettes','ep_treso_init',
     'annonce_url','annonce_titre','annonce_ville','annonce_type','annonce_dpe','annonce_etage','annonce_statut','annonce_notes',
     'mois_depart','annee_depart','horizon'];
   ids.forEach(id => {
