@@ -1572,7 +1572,6 @@ function calcTreso() {
   cumulEl.textContent = (cumulAn >= 0 ? '+' : '') + fmt(cumulAn, 0);
   cumulEl.style.color = cumulAn >= 0 ? 'var(--green)' : 'var(--red)';
 
-  drawChart(monthsData, currentChartTab, depensesVie, depensesBien, salaire, loyerEffectif, patrimoineDepart);
   calcSuiviTreso(mensualite, loyerEffectif, depensesBien, depensesVie, salaire, horizon, moisDepart, anneeDepart, moisLabels);
 }
 
